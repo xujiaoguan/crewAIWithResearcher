@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crew 论文报告生成</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Crew 论文报告工作台</h1>
+        <p>输入选题后一键生成调研笔记、Markdown 论文稿与 PDF（与命令行 <code>ask.py</code> 同源流程）。</p>
+      </header>
+
+      <section class="card">
+        <label for="topic">研究主题 / 论文选题</label>
+        <textarea
+          id="topic"
+          placeholder="例如：基于大语言模型的代码补全技术综述与实验分析"
+        ></textarea>
+        <div class="row">
+          <button type="button" class="primary" id="run">开始生成</button>
+          <button type="button" class="ghost" id="refresh-files">重新加载已生成文件</button>
+          <span class="hint"
+            >首次生成较慢；若需可核验参考文献 URL，请在服务端配置环境变量
+            <code>SERPER_API_KEY</code>。</span
+          >
+        </div>
+        <div id="status" class="status" role="status"></div>
+
+        <div class="tabs">
+          <button type="button" class="tab active" data-tab="report">report.md 预览</button>
+          <button type="button" class="tab" data-tab="notes">research_notes.md</button>
+          <button type="button" class="tab" data-tab="summary">本次执行摘要</button>
+        </div>
+
+        <div class="panel active" data-panel="report">
+          <div id="md-preview" class="preview"><p class="muted">尚无预览</p></div>
+        </div>
+        <div class="panel" data-panel="notes">
+          <div id="notes-preview" class="preview"><p class="muted">尚无预览</p></div>
+        </div>
+        <div class="panel" data-panel="summary">
+          <div id="raw-out" class="preview"><pre class="raw"></pre></div>
+        </div>
+
+        <div class="links" id="links"></div>
+      </section>
+
+      <footer>API 文档：<code>POST /api/generate</code> · 兼容 <code>POST /v1/chat/completions</code></footer>
+    </div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
